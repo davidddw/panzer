@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jbuilder.ylog.mapper.OptionsMapper">
+    <resultMap type="Options" id="optionsResultMap">
+        <result property="id" column="option_id" />
+        <result property="name" column="option_name" />
+        <result property="value" column="option_value" />
+        <result property="autoload" column="option_autoload" />
+    </resultMap>
+    <select id="getOptions" resultMap="optionsResultMap">
+        SELECT
+        id AS option_id,
+        name AS option_name,
+        value AS option_value,
+        autoload AS option_autoload
+        FROM `options`
+    </select>
+
+    <select id="getOption" resultMap="optionsResultMap">
+        SELECT
+        id AS option_id,
+        name AS option_name,
+        value AS option_value,
+        autoload AS option_autoload
+        FROM `options`
+        WHERE
+        id=#{id}
+    </select>
+
+    <select id="getCount" resultType="long">
+        SELECT
+        COUNT(*)
+        FROM
+        `options`
+    </select>
+
+    <insert id="addOption" parameterType="Options" >
+        INSERT INTO
+        `options`(name,value,autoload)
+        VALUES(#{name},#{value},'yes')
+    </insert>
+
+    <update id="updateOption" parameterType="Options" >
+        UPDATE
+        `options`
+        SET
+        name=#{name},
+        value=#{value},
+        autoload=#{autoload}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="deleteOption" parameterType="long">
+        DELETE FROM
+        `options`
+        WHERE id=#{id}
+    </delete>
+</mapper>
